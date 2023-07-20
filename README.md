@@ -16,6 +16,12 @@ Job_Template -> Survey -> Create GitHub repo -> push OCP Namespaces CRs -> Creat
 ansible-builder build -t quay.io/valeube/ansible-community-ee:latest
 ```
 
+## Push the image
+
+```
+podman push quay.io/valeube/ansible-community-ee:latest
+```
+
 ## Run the playbook
 
 ```
