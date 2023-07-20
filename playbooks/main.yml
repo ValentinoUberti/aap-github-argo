@@ -1,6 +1,7 @@
 - name: Deploy application
   hosts: all
   gather_facts: no
+  connection: local
   tasks:
     - name: Create a Github repository
       community.general.github_repo:
