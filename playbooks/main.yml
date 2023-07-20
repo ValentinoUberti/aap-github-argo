@@ -1,7 +1,9 @@
 - name: Deploy application
-  hosts: all
+  hosts: localhost
   gather_facts: no
   connection: local
+  vars:
+    ansible_python_interpreter: /usr/bin/python
   tasks:
     - name: Create a Github repository
       community.general.github_repo:
@@ -12,3 +14,4 @@
         state: present
         force_defaults: false
       register: result
+      delegate_to: localhost
