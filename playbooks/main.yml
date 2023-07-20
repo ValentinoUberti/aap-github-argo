@@ -1,0 +1,13 @@
+- name: Deploy application
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Create a Github repository
+      community.general.github_repo:
+        access_token: mytoken
+        name: myrepo
+        description: "Just for fun"
+        private: true
+        state: present
+        force_defaults: false
+      register: result
