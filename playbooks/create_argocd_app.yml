@@ -11,7 +11,7 @@
 
     - name: Create Application from template
       ansible.builtin.template:
-        src: ../templates/application.j2
+        src: ../templates/argocd_app.j2
         dest: "/tmp/application.yaml"
 
     - name: Create ArgoCD application

@@ -1,6 +1,6 @@
 kind: Application
 metadata:
-  name: myapp
+  name: "{{ namespace_name }}-app"
   namespace: openshift-gitops
 spec:
   destination:
@@ -8,7 +8,7 @@ spec:
   project: default
   source:
     path: .
-    repoURL: https://github.com/ValentinoUberti/myrepo.git
+    repoURL: "{{ github_repo }}"
     targetRevision: HEAD
   syncPolicy:
     automated:
