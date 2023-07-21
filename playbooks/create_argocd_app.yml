@@ -17,9 +17,9 @@
      
      
 
-    - name: Login to OpenShift
-      ansible.builtin.shell: oc login --token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token) https://kubernetes.default.svc
-      register: output
+    #- name: Login to OpenShift
+    #  ansible.builtin.shell: oc login --token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token) https://kubernetes.default.svc --insecure-skip-tls-verify
+    #  register: output
 
     - name: Create ArgoCD application
       ansible.builtin.command: oc create -f /tmp/application.yaml -n openshift-gitops 
