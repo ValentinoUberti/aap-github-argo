@@ -1,6 +1,6 @@
 - name: Deploy application
   hosts: localhost
-  gather_facts: false
+  gather_facts: true
   connection: local
   vars:
     ansible_python_interpreter: /usr/bin/python
