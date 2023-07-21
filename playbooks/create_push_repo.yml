@@ -63,4 +63,9 @@
         "nothing to commit, working tree clean" not in output.stdout) or
         (output.stderr != ""))
 
-   
+    - name: Setting facts so that they will be persisted in the fact cache
+      ansible.builtin.set_stats:
+        data:
+          github_repo: "https://github.com/ValentinoUberti/{{ github_repo }}"
+          namespace_name: "{{ namespace_name }}"
+      
