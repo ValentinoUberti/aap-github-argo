@@ -1,0 +1,15 @@
+kind: Application
+metadata:
+  name: myapp
+  namespace: openshift-gitops
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: .
+    repoURL: https://github.com/ValentinoUberti/myrepo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true

@@ -7,6 +7,7 @@
     github_repo: "myrepo"
     tower_job_id: "69"
     access_token: ""
+    namespace_name: myapp
   tasks:
     - name: Create a Github repository
       community.general.github_repo:
@@ -28,6 +29,12 @@
       ansible.builtin.template:
         src: ../templates/namespace.j2
         dest: "/tmp/{{ github_repo }}/namespace.yaml"
+
+    - name: Create the application template
+      ansible.builtin.template:
+        src: ../templates/application.j2
+        dest: "/tmp/{{ github_repo }}/application.yaml"
+
 
     - name: Debug /tmp/{{ github_repo }}/namespace.yaml
       ansible.builtin.command: cat /tmp/{{ github_repo }}/namespace.yaml
@@ -56,3 +63,7 @@
         (output.stdout != "" and
         "nothing to commit, working tree clean" not in output.stdout) or
         (output.stderr != ""))
+
+    - name: Setting facts so that they will be persisted in the fact cache
+      ansible.builtin.set_fact:
+        github_repo: "https://github.com/ValentinoUberti/{{ github_repo }}"
