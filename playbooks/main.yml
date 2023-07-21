@@ -1,17 +1,58 @@
 - name: Deploy application
   hosts: localhost
-  gather_facts: no
+  gather_facts: false
   connection: local
   vars:
     ansible_python_interpreter: /usr/bin/python
+    github_repo: "myrepo"
+    tower_job_id: "69"
+    access_token: ""
   tasks:
     - name: Create a Github repository
       community.general.github_repo:
-        access_token: mytoken
-        name: myrepo
+        access_token: "{{ access_token }}"
+        name: "{{ github_repo }}"
         description: "Just for fun"
-        private: true
+        private: false
         state: present
-        force_defaults: false
+        force_defaults: true
       register: result
-      delegate_to: localhost
+
+    - name: Create tmp directory
+      ansible.builtin.file:
+        path: /tmp/{{ github_repo }}
+        state: directory
+        
+        
+    - name: Create the namespace template
+      ansible.builtin.template:
+        src: ../templates/namespace.j2
+        dest: "/tmp/{{ github_repo }}/namespace.yaml"
+
+    - name: Debug /tmp/{{ github_repo }}/namespace.yaml
+      ansible.builtin.command: cat /tmp/{{ github_repo }}/namespace.yaml
+
+    - name: "Add output directory to git"
+      ansible.builtin.shell: |
+        git init &&
+        git remote add origin https://{{ access_token }}@github.com/ValentinoUberti/{{ github_repo }}.git &&
+        git config --global user.name "ValentinoUberti" &&
+        git config --global user.email "vuberti@redhat.com" &&
+        git branch -M main &&
+        git add -A &&
+        git commit -m "RHAAP Job ID {{ tower_job_id }}: Automated Commit by Ansible  " &&
+        git push  -u origin main
+        
+      args:
+        chdir: "/tmp/{{ github_repo }}"
+      ignore_errors: false
+      register: output
+      failed_when: >
+        output.msg != "" and
+        ("error" in output.msg or
+        "conflict" in output.msg or
+        "Errno" in output.msg or
+        "fatal" in output.msg or
+        (output.stdout != "" and
+        "nothing to commit, working tree clean" not in output.stdout) or
+        (output.stderr != ""))
