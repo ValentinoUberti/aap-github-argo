@@ -5,6 +5,13 @@
   vars:
     ansible_python_interpreter: /usr/bin/python
   tasks:
+    - name: Setting facts
+      ansible.builtin.set_fact:
+        github_repo: "{{ hostvars['localhost']['github_repo'] }}"
+        namespace_name: "{{ hostvars['localhost']['namespace_name'] }}"
+        
+
+
     - name: Create Application from template
       ansible.builtin.template:
         src: ../templates/application.j2

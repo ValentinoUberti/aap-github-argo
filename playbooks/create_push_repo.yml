@@ -67,3 +67,5 @@
       ansible.builtin.set_fact:
         github_repo: "https://github.com/ValentinoUberti/{{ github_repo }}"
         namespace_name: "{{ namespace_name }}"
+      delegate_to: localhost
+      delegate_facts: true
