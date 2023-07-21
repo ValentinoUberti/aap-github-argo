@@ -1,0 +1,17 @@
+- name: Deploy application
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+  tasks:
+    - name: Create Application from template
+      ansible.builtin.template:
+        src: ../templates/application.j2
+        dest: "/tmp/application.yaml"
+
+    - name: Create ArgoCD application
+      ansible.builtin.command: oc create -f /tmp/application.yaml -n openshift-gitops
+      register: output
+
+    

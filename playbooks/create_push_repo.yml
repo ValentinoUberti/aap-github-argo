@@ -68,3 +68,4 @@
     - name: Setting facts so that they will be persisted in the fact cache
       ansible.builtin.set_fact:
         github_repo: "https://github.com/ValentinoUberti/{{ github_repo }}"
+        namespace_name: {{ namespace_name }}
