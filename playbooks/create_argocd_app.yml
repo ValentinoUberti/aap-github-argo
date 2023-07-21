@@ -15,7 +15,7 @@
         dest: "/tmp/application.yaml"
 
     - name: Create ArgoCD application
-      ansible.builtin.command: oc create -f /tmp/application.yaml -n openshift-gitops
+      ansible.builtin.command: oc create -f /tmp/application.yaml -n openshift-gitops --token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
       register: output
 
     
