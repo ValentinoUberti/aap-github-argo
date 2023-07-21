@@ -4,9 +4,7 @@
   connection: local
   vars:
     ansible_python_interpreter: /usr/bin/python
-    github_repo: "myrepo"
-    tower_job_id: "69"
-    namespace_name: myapp
+    
   vars_files: 
     - ../vars/vault-token.yml
   tasks:
@@ -68,4 +66,4 @@
     - name: Setting facts so that they will be persisted in the fact cache
       ansible.builtin.set_fact:
         github_repo: "https://github.com/ValentinoUberti/{{ github_repo }}"
-        namespace_name: {{ namespace_name }}
+        namespace_name: "{{ namespace_name }}"
